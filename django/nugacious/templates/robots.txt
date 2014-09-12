@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /comparison/
+
+Sitemap: http://nugacio.us/sitemap.xml

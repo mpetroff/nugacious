@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Nugacious | Quantity Comparisons{% endblock %}
+{% block header %}
+  <meta name="description" content="Nugacious compares physical quantities. Enter a quantity, and matching quantities are returned.">
+  <meta name="keywords" content="Nugacious, quantity comparison, quantity, comparison, unit">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="site-wrapper">
+<div class="site-wrapper-inner">
+<div class="cover-container">
+
+<div class="container">
+
+<div class="text-center">
+  <img src="{% static 'img/logo.svg' %}" alt="Nugacio.us" class="logo logo-home">
+</div>
+
+<form role="form" action="/comparison/" method="get">  
+  <div class="input-group query-box">
+    <input type="text" class="form-control" name="i" placeholder="Enter a quantity, e.g. 5 kilometers" autofocus>
+    <span class="input-group-btn">
+      <button class="btn btn-default arrow" type="submit"></button>
+    </span>
+  </div>
+</form>
+
+</div>
+
+<div class="mastfoot footer">
+  <p>Nugacious is a project by <a href="//mpetroff.net/">Matthew Petroff</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load markdown %}
+{% load smartypants %}
+
+{% block title %}{% if query %}{{ query }} | {% endif %}Nugacious{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+<div class="text-center">
+  <a href="/">
+   <img src="{% static 'img/logo.svg' %}" alt="Nugacio.us" class="logo">
+  </a>
+</div>
+
+<form role="form" action="/comparison/" method="get">  
+  <div class="input-group">
+    <input type="text" class="form-control" name="i" value="{{ query }}">
+    <span class="input-group-btn">
+      <button class="btn btn-default arrow" type="submit"></button>
+    </span>
+  </div>
+</form>
+<br>
+
+{% if dimension_error %}
+<div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title">Input Interpretation</h3></div>
+  <div class="panel-body">
+    {{ dimension_error | safe }}
+  </div>
+</div>
+{% endif %}
+
+<div class="panel panel-danger">
+<div class="panel-heading"><h3 class="panel-title">Error</h3></div>
+<div class="panel-body justify">
+{% filter markdown | smartypants %}
+{% if dimension_error %}
+The dimensions of the quantity you entered are not supported. Sorry.
+{% elif no_dimensions_error %}
+You entered a dimensionless number, not a quantity. Please enter a quantity,
+e.g. 5 kilometers.
+{% elif unit_error %}
+Unfortunately, the unit "{{ unit_error | safe }}" was not understood. Please
+check your input for errors. If you're perfect and didn't make a mistake,
+you're out of luck. Sorry. Otherwise, please fix your query and try again.
+{% elif empty_error %}
+Your query was blank. Please enter something.
+{% else %}
+An unknown error occured. Sorry.
+{% endif %}
+{% endfilter %}
+</div>
+</div>
+
+<div class="footer">
+  <p>Nugacious is a project by <a href="//mpetroff.net/">Matthew Petroff</a>.</p>
+</div>
+
+</div>
+
+{% endblock %}

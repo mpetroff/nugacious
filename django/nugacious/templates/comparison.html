@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load smartypants %}
+
+{% block title %}{{ query }} | Nugacious{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+<div class="text-center">
+  <a href="/">
+   <img src="{% static 'img/logo.svg' %}" alt="Nugacio.us" class="logo">
+  </a>
+</div>
+
+<form role="form" action="/comparison/" method="get">  
+  <div class="input-group">
+    <input type="text" class="form-control" name="i" value="{{ query }}">
+    <span class="input-group-btn">
+      <button class="btn btn-default arrow" type="submit"></button>
+    </span>
+  </div>
+</form>
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title">Input Interpretation</h3></div>
+  <div class="panel-body">
+    {{ input | safe }}
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title">Closest Comparison</h3></div>
+  <div class="panel-body">
+    {{ closest_match | safe }}
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title">Close Comparisons</h3></div>
+  <ul class="list-group">
+  {% for m in close_matches %}
+    <li class="list-group-item">{{ m | safe | smartypants }}</li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h3 class="panel-title">Random Comparisons</h3></div>
+  <ul class="list-group">
+  {% for m in random_matches %}
+    <li class="list-group-item">{{ m | safe | smartypants }}</li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a class="btn btn-success btn-lg btn-block" href="{{ request.get_full_path }}">Get more comparisons <div class="random"></div></a>
+  </div>
+</div>
+
+<div class="footer">
+  <p>Nugacious is a project by <a href="//mpetroff.net/">Matthew Petroff</a>.</p>
+</div>
+
+</div>
+
+{% endblock %}

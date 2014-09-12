@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load staticfiles %}
+<!--
+  _  _                   _
+ | \| |_  _ __ _ __ _ __(_)___ _  _ ___
+ | .` | || / _` / _` / _| / _ \ || (_-<
+ |_|\_|\_,_\__, \__,_\__|_\___/\_,_/__/
+           |___/
+-->
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% block header %}{% endblock %}
+
+  <title>{% block title %}{% endblock %}</title>
+  
+  <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}"/>
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+  
+  <!-- Bootstrap core CSS -->
+  <!--<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">-->
+  
+  <!-- Custom styles -->
+  <!--<link rel="stylesheet" href="{% static 'css/style.css' %}">-->
+  
+  <!-- Minified styles -->
+  <link rel="stylesheet" href="{% static 'css/min.css' %}">
+  
+</head>
+
+<body>
+
+{% block content %}{% endblock %}
+
+<a href="/about/">
+  <div class="about"></div>
+</a>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-54540215-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
