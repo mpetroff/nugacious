@@ -278,6 +278,9 @@ class comparator(object):
         if (s[0] == '*'):
             s = '1' + s
         
+        # Allow caret power notation to work
+        s = s.replace('^', '**')
+
         # Split at first remaining letter
         i = re.search('[^a-zA-Z]*', s).end()
         
