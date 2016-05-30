@@ -1,5 +1,5 @@
-# Quantity comparisons for Nugacious (http://nugacio.us/)
-# (c) 2014, Matthew Petroff (http://mpetroff.net/)
+# Quantity comparisons for Nugacious (https://nugacious.mpetroff.net/)
+# (c) 2014-2016, Matthew Petroff (https://mpetroff.net/)
 
 import pickle
 import gzip
@@ -9,6 +9,7 @@ import string
 import fractions
 import os
 import itertools
+import bisect
 import numpy as np
 import pint
 import simpleeval
@@ -365,13 +366,22 @@ class comparator(object):
         
         # Close comparisons
         close_matches = []
+        prev_close_matches = []
+        length = len(self.data[dimension][2])
+        dist = min(250, int(0.05 * length))
+        indicies = (index + max(-dist, 0), index + min(dist, length))
+        popularity = self.data[dimension][4][indicies[0]:indicies[1]]
+        pop_dist = list(itertools.accumulate(popularity))
         for i in range(close_count):
             while True:
-                length = len(self.data[dimension][2])
-                dist = min(250, int(0.05 * length))
-                ri = index + random.randint(-dist, dist)
-                if ri >= 0 and ri < length:
+                if i < close_count - 1:
+                    ri = random.random() * pop_dist[-1]
+                    ri = indicies[0] + bisect.bisect(pop_dist, ri)
+                else:
+                    ri = random.randint(*indicies)
+                if ri not in prev_close_matches:
                     break
+            prev_close_matches.append(ri)
             close_matches.append(match(self.data[dimension][0][ri],
                 self.data[dimension][1][ri],
                 qb.magnitude / self.data[dimension][2][ri],
@@ -381,8 +391,19 @@ class comparator(object):
         
         # Random comparisons
         random_matches = []
+        prev_random_matches = []
+        indicies = (0, len(self.data[dimension][2]) - 1)
+        popularity = self.data[dimension][4]
+        pop_dist = list(itertools.accumulate(popularity))
         for i in range(random_count):
-            ri = random.randint(0, len(self.data[dimension][2]) - 1)
+            while True:
+                if i < close_count - 1:
+                    ri = random.random() * pop_dist[-1]
+                    ri = indicies[0] + bisect.bisect(pop_dist, ri)
+                else:
+                    ri = random.randint(*indicies)
+                if ri not in prev_random_matches:
+                    break
             random_matches.append(match(self.data[dimension][0][ri],
                 self.data[dimension][1][ri],
                 qb.magnitude / self.data[dimension][2][ri],

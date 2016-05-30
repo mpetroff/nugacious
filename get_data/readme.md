@@ -1,7 +1,10 @@
 # Usage
 
-Run `query.py` to save data from DBpedia followed by `process.py` to prepared
-saved data for Nugacious.
+Run `query.py` to save data from DBpedia followed by `process.py` to prepare
+saved data for Nugacious. Then run `download_view_stats.py` to download
+Wikipedia view count statistics, `extract_views.py` to process and extract the
+view count statistics from the downloaded logs, and `add_views.py` to add the
+view count data to Nugacious' prepared data.
 
 # Relevant DBpedia Ontology Items
 
